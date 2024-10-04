@@ -48,6 +48,11 @@ def handle_message(event):
         TextSendMessage(text='「' + event.message.text + '」って何？')
      )
 
+@app.route("/")
+def home():
+    return "Hello, this is the home page!"
+
+
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
