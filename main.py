@@ -6,12 +6,19 @@ import os
 
 app = Flask(__name__)
 
+
 # 環境変数からLINEのアクセストークンとシークレットを取得
 LINE_CHANNEL_ACCESS_TOKEN = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
 LINE_CHANNEL_SECRET = os.environ['LINE_CHANNEL_SECRET']
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
+
+@app.route("/debug")
+def debug():
+    access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', 'Not Found')
+    secret = os.getenv('LINE_CHANNEL_SECRET', 'Not Found')
+    return f"Access Token: {access_token}, Secret: {secret}"
 
 @app.route("/callback", methods=['POST'])
 def callback():
