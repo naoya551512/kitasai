@@ -1,58 +1,43 @@
 from flask import Flask, request, abort
-
-from linebot import (
-    LineBotApi, WebhookHandler
-)
-from linebot.exceptions import (
-    InvalidSignatureError
-)
-from linebot.models import (
-    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
-)
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage
 import os
 
-# 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
 
-
-#環境変数からLINE Access Tokenを設定
-LINE_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
-#環境変数からLINE Channel Secretを設定
-LINE_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+# 環境変数からLINEのアクセストークンとシークレットを取得
+LINE_CHANNEL_ACCESS_TOKEN = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
+LINE_CHANNEL_SECRET = os.environ['LINE_CHANNEL_SECRET']
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 @app.route("/callback", methods=['POST'])
 def callback():
-    # get X-Line-Signature header value
+    # X-Line-Signature ヘッダーから署名を取得
     signature = request.headers['X-Line-Signature']
 
-    # get request body as text
+    # リクエストボディの内容を取得
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
 
-    # handle webhook body
+    # 署名を検証し、問題があればエラーを返す
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
-        abort(200)
+        abort(400)
 
-    return 'OK', 200
+    return 'OK'
 
-# MessageEvent
+# メッセージが送信された時の処理
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-	line_bot_api.reply_message(
+    # 受け取ったメッセージをそのまま返す
+    reply_text = event.message.text
+    line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text='「' + event.message.text + '」って何？')
-     )
-
-@app.route("/")
-def home():
-    return "Hello, this is the home page!"
-
+        TextSendMessage(text=reply_text)
+    )
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT"))
-    app.run(host="0.0.0.0", port=port)
+    app.run()
