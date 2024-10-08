@@ -110,7 +110,7 @@ def handle_message(event):
                     response += f"・{course}\n"
 
     # 授業の一覧を見たい場合
-    elif re.search(r"(はい|みたい|見たい|みせて|見せて|表示|一覧)", message):
+    elif re.search(r"(はい|みたい|見たい|みせて|見せて|表示|一覧|見る|みる)", message):
         for course, info in course_info.items():
             response += f"{course}\n"
 
@@ -152,7 +152,7 @@ def handle_message(event):
         response = "その講義についての情報はありません。講義一覧を見ますか？"
 
     response = response.strip()
-    
+
     # 返信を送信
     line_bot_api.reply_message(
         event.reply_token,
