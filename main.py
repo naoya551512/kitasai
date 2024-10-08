@@ -1,34 +1,38 @@
 from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import (
+    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
+)
 import os
 
+# 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
 
 
-# 環境変数からLINEのアクセストークンとシークレットを取得
-LINE_CHANNEL_ACCESS_TOKEN = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
-LINE_CHANNEL_SECRET = os.environ['LINE_CHANNEL_SECRET']
+#環境変数からLINE Access Tokenを設定
+LINE_CHANNEL_ACCESS_TOKEN = os.environ["LINE_CHANNEL_ACCESS_TOKEN"]
+#環境変数からLINE Channel Secretを設定
+LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
-@app.route("/debug")
-def debug():
-    access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', 'Not Found')
-    secret = os.getenv('LINE_CHANNEL_SECRET', 'Not Found')
-    return f"Access Token: {access_token}, Secret: {secret}"
-
 @app.route("/callback", methods=['POST'])
 def callback():
-    # X-Line-Signature ヘッダーから署名を取得
+    # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
 
-    # リクエストボディの内容を取得
+    # get request body as text
     body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
 
-    # 署名を検証し、問題があればエラーを返す
+    # handle webhook body
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
@@ -36,15 +40,14 @@ def callback():
 
     return 'OK'
 
-# メッセージが送信された時の処理
+# MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # 受け取ったメッセージをそのまま返す
-    reply_text = event.message.text
-    line_bot_api.reply_message(
+	line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=reply_text)
-    )
+        TextSendMessage(text='「' + event.message.text + '」って何？')
+     )
 
 if __name__ == "__main__":
-    app.run()
+    port = int(os.getenv("PORT"))
+    app.run(host="0.0.0.0", port=port)
