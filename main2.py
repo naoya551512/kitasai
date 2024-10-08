@@ -151,6 +151,8 @@ def handle_message(event):
     if not response:
         response = "その講義についての情報はありません。講義一覧を見ますか？"
 
+    response = response.strip()
+    
     # 返信を送信
     line_bot_api.reply_message(
         event.reply_token,
