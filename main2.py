@@ -122,8 +122,8 @@ def handle_message(event):
     elif re.search(r"すべて|詳しく|全部|全て", message):
         for course, info in course_info.items():
             response += (f"講義名: {course}\n担当教授: {info['担当教授']}\n単位取得率: {info['単位取得率']}\n"
-                         f"定期テスト: {info['定期テスト']}\n出席確認: {info['出席確認']}\n"
-                         f"履修時期: {info['履修時期']}\n\n")
+                         f"期末テスト: {info['期末テスト']}\n"
+                         f"履修時期: {info['履修時期']}\n履修時間: {info['履修時間']}\n授業種類: {info['授業種類']}\n単位数: {info['単位数']}\n学科: {info['学科']}\n\n")
 
     # 入力から授業名を抽出して詳細情報を表示
     else:
@@ -140,15 +140,25 @@ def handle_message(event):
                 if re.search(r"単位取得率", message):
                     a = 1
                     response += f"{course}の単位取得率は{info['単位取得率']}です。\n"
-                if re.search(r"定期テスト", message):
+                if re.search(r"テスト", message):
                     a = 1
-                    response += f"{course}は定期テストが{info['定期テスト']}ます。\n"
-                if re.search(r"出席確認", message):
+                    response += f"{course}は期末テストが{info['期末テスト']}ます。\n"
+                if re.search(r"何曜日", message):
                     a = 1
-                    response += f"{course}は出席確認が{info['出席確認']}ます。\n"
+                    response += f"{course}は{info['履修時間']}に履修できます。\n"
+                if re.search(r"授業種類", message):
+                    a = 1
+                    response += f"{course}は{info['授業種類']}に履修できます。\n"
+                if re.search(r"単位数", message):
+                    a = 1
+                    response += f"{course}は{info['単位数']}に履修できます。\n"
+                if re.search(r"学科", message):
+                    a = 1
+                    response += f"{course}は{info['学科']}に履修できます。\n"
+                
                 if a == 0:
-                    response = (f"講義名: {course}\n担当教授: {info['担当教授']}\n単位取得率: {info['単位取得率']}\n"
-                                f"定期テスト: {info['定期テスト']}\n出席確認: {info['出席確認']}\n履修時期: {info['履修時期']}\n")
+                    response = (f"講義名: {course}\n担当教授: {info['担当教授']}\n単位取得率: {info['単位取得率']}\n学科: {info['学科']}\n"
+                                f"期末テスト: {info['期末テスト']}\n履修時期: {info['履修時期']}\n履修時間: {info['履修時間']}\n授業種類: {info['授業種類']}\n単位数: {info['単位数']}\n")
                 break
 
     # メッセージが設定されていない場合のデフォルト応答
