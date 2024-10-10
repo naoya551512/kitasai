@@ -74,7 +74,7 @@ def handle_message(event):
         else:
             response += "１年で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"１年", info['履修時期']):
+                if re.search(r"1年", info['履修時期']):
                     response += f"・{course}\n"
 
     # 二年生で履修できる講義を知りたい場合
