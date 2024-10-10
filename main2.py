@@ -64,12 +64,12 @@ def handle_message(event):
         if re.search(r"(前期)", message):
             response += "１年前期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"1年前期", info['履修時期']):
+                if re.search(r"1年 前期", info['履修時期']):
                     response += f"・{course}\n"
         elif re.search(r"(後期)", message):
             response += "１年後期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"1年後期", info['履修時期']):
+                if re.search(r"1年 後期", info['履修時期']):
                     response += f"・{course}\n"
         else:
             response += "１年で履修できる授業\n"
@@ -82,12 +82,12 @@ def handle_message(event):
         if re.search(r"(前期)", message):
             response += "２年前期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"2年前期", info['履修時期']):
+                if re.search(r"2年 前期", info['履修時期']):
                     response += f"・{course}\n"
         elif re.search(r"(後期)", message):
             response += "２年後期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"2年後期", info['履修時期']):
+                if re.search(r"2年 後期", info['履修時期']):
                     response += f"・{course}\n"
         else:
             response += "２年で履修できる授業\n"
@@ -100,12 +100,12 @@ def handle_message(event):
         if re.search(r"(前期)", message):
             response += "３年前期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"3年前期", info['履修時期']):
+                if re.search(r"3年 前期", info['履修時期']):
                     response += f"・{course}\n"
         elif re.search(r"(後期)", message):
             response += "３年後期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"3年後期", info['履修時期']):
+                if re.search(r"3年 後期", info['履修時期']):
                     response += f"・{course}\n"
         else:
             response += "３年で履修できる授業\n"
@@ -122,7 +122,7 @@ def handle_message(event):
     elif re.search(r"すべて|詳しく|全部|全て", message):
         for course, info in course_info.items():
             response += (f"講義名: {course}\n"
-                         f"期末テスト: {info['期末テスト']}\n"
+                         f"期末テスト: {info['定期テスト']}\n"
                          f"履修時期: {info['履修時期']}\n履修時間: {info['履修時間']}\n授業種類: {info['授業種類']}\n単位数: {info['単位数']}\n学科: {info['学科']}\n\n")
 
     # 入力から授業名を抽出して詳細情報を表示
@@ -136,7 +136,7 @@ def handle_message(event):
                     response += f"{course}は{info['履修時期']}に履修できます。\n"
                 if re.search(r"テスト", message):
                     a = 1
-                    response += f"{course}は期末テストが{info['期末テスト']}ます。\n"
+                    response += f"{course}は期末テストが{info['定期テスト']}ます。\n"
                 if re.search(r"何曜日", message):
                     a = 1
                     response += f"{course}は{info['履修時間']}に履修できます。\n"
@@ -152,7 +152,7 @@ def handle_message(event):
                 
                 if a == 0:
                     response = (f"講義名: {course}\n学科: {info['学科']}\n"
-                                f"期末テスト: {info['期末テスト']}\n履修時期: {info['履修時期']}\n履修時間: {info['履修時間']}\n授業種類: {info['授業種類']}\n単位数: {info['単位数']}\n")
+                                f"期末テスト: {info['定期テスト']}\n履修時期: {info['履修時期']}\n履修時間: {info['履修時間']}\n授業種類: {info['授業種類']}\n単位数: {info['単位数']}\n")
                 break
 
     # メッセージが設定されていない場合のデフォルト応答
