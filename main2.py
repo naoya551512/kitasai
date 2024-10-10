@@ -121,7 +121,7 @@ def handle_message(event):
     # すべての講義情報を求めている場合
     elif re.search(r"すべて|詳しく|全部|全て", message):
         for course, info in course_info.items():
-            response += (f"講義名: {course}\n担当教授: {info['担当教授']}\n単位取得率: {info['単位取得率']}\n"
+            response += (f"講義名: {course}\n"
                          f"期末テスト: {info['期末テスト']}\n"
                          f"履修時期: {info['履修時期']}\n履修時間: {info['履修時間']}\n授業種類: {info['授業種類']}\n単位数: {info['単位数']}\n学科: {info['学科']}\n\n")
 
@@ -134,12 +134,6 @@ def handle_message(event):
                 if re.search(r"(?=.*(履修|受|？))(?=.*(いつ|後期|前期)|履修時期)", message):
                     a = 1
                     response += f"{course}は{info['履修時期']}に履修できます。\n"
-                if re.search(r"教授|先生|担当", message):
-                    a = 1
-                    response += f"{course}の担当教授は{info['担当教授']}です。\n"
-                if re.search(r"単位取得率", message):
-                    a = 1
-                    response += f"{course}の単位取得率は{info['単位取得率']}です。\n"
                 if re.search(r"テスト", message):
                     a = 1
                     response += f"{course}は期末テストが{info['期末テスト']}ます。\n"
@@ -157,7 +151,7 @@ def handle_message(event):
                     response += f"{course}は{info['学科']}に履修できます。\n"
                 
                 if a == 0:
-                    response = (f"講義名: {course}\n担当教授: {info['担当教授']}\n単位取得率: {info['単位取得率']}\n学科: {info['学科']}\n"
+                    response = (f"講義名: {course}\n学科: {info['学科']}\n"
                                 f"期末テスト: {info['期末テスト']}\n履修時期: {info['履修時期']}\n履修時間: {info['履修時間']}\n授業種類: {info['授業種類']}\n単位数: {info['単位数']}\n")
                 break
 
