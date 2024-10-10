@@ -13,7 +13,7 @@ import os
 import re
 import json
 
-with open('course.json', 'r', encoding='utf-8') as f:
+with open('b.json', 'r', encoding='utf-8') as f:
     course_info = json.load(f)
 
 '''course_info = {
