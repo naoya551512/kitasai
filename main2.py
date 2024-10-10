@@ -64,12 +64,12 @@ def handle_message(event):
         if re.search(r"(前期)", message):
             response += "１年前期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"１年前期", info['履修時期']):
+                if re.search(r"1年前期", info['履修時期']):
                     response += f"・{course}\n"
         elif re.search(r"(後期)", message):
             response += "１年後期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"１年後期", info['履修時期']):
+                if re.search(r"1年後期", info['履修時期']):
                     response += f"・{course}\n"
         else:
             response += "１年で履修できる授業\n"
@@ -82,17 +82,17 @@ def handle_message(event):
         if re.search(r"(前期)", message):
             response += "２年前期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"２年前期", info['履修時期']):
+                if re.search(r"2年前期", info['履修時期']):
                     response += f"・{course}\n"
         elif re.search(r"(後期)", message):
             response += "２年後期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"２年後期", info['履修時期']):
+                if re.search(r"2年後期", info['履修時期']):
                     response += f"・{course}\n"
         else:
             response += "２年で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"２年", info['履修時期']):
+                if re.search(r"2年", info['履修時期']):
                     response += f"・{course}\n"
 
     # 三年生で履修できる講義を知りたい場合
@@ -100,17 +100,17 @@ def handle_message(event):
         if re.search(r"(前期)", message):
             response += "３年前期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"３年前期", info['履修時期']):
+                if re.search(r"3年前期", info['履修時期']):
                     response += f"・{course}\n"
         elif re.search(r"(後期)", message):
             response += "３年後期で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"３年後期", info['履修時期']):
+                if re.search(r"3年後期", info['履修時期']):
                     response += f"・{course}\n"
         else:
             response += "３年で履修できる授業\n"
             for course, info in course_info.items():
-                if re.search(r"３年", info['履修時期']):
+                if re.search(r"3年", info['履修時期']):
                     response += f"・{course}\n"
 
     # 授業の一覧を見たい場合
