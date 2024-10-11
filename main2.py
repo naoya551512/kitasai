@@ -27,10 +27,20 @@ with open('b.json', 'r', encoding='utf-8') as f:
 app = Flask(__name__)
 
 
-#環境変数からLINE Access Tokenを設定
+"""#環境変数からLINE Access Tokenを設定
 LINE_CHANNEL_ACCESS_TOKEN = os.environ["LINE_CHANNEL_ACCESS_TOKEN"]
 #環境変数からLINE Channel Secretを設定
-LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
+LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]"""
+
+#環境変数からLINE Access Tokenを設定
+LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN")
+#環境変数からLINE Channel Secretを設定
+LINE_CHANNEL_SECRET = os.environ.get("LINE_CHANNEL_SECRET")
+
+if LINE_CHANNEL_ACCESS_TOKEN is None:
+    print("Error: LINE_CHANNEL_ACCESS_TOKEN is not set.")
+if LINE_CHANNEL_SECRET is None:
+    print("Error: LINE_CHANNEL_SECRET is not set.")
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
