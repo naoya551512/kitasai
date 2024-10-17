@@ -12,6 +12,7 @@ from linebot.models import (
 import os
 import re
 import json
+import requests
 
 with open('b.json', 'r', encoding='utf-8') as f:
     course_info = json.load(f)
@@ -37,7 +38,9 @@ LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN")
 #環境変数からLINE Channel Secretを設定
 LINE_CHANNEL_SECRET = os.environ.get("LINE_CHANNEL_SECRET")
 
-GEMINI_API_KEY = os.get("GEMINI_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+GEMINI_API_URL = "https://api.gemini.com/v1/chat" 
 
 if LINE_CHANNEL_ACCESS_TOKEN is None:
     print("Error: LINE_CHANNEL_ACCESS_TOKEN is not set.")
@@ -46,6 +49,7 @@ if LINE_CHANNEL_SECRET is None:
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -65,7 +69,7 @@ def callback():
     return 'OK'
 
 # MessageEvent
-@handler.add(MessageEvent, message=TextMessage)
+"""@handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = event.message.text  # ユーザーのメッセージ
     response = ""
@@ -177,6 +181,31 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=response)
+    )
+"""
+def send_to_gemini(message_text):
+    headers = {
+        "Authorization": f"Bearer {GEMINI_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "message": message_text
+    }
+    response = requests.post(GEMINI_API_URL, headers=headers, json=data)
+    
+    if response.status_code == 200:
+        return response.json().get("reply")
+    else:
+        return "Gemini APIへのリクエストに失敗しました。"
+
+
+def handle_message(event):
+    message = event.message.text
+    gemini_reply = send_to_gemini(message)
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=gemini_reply),
     )
 
 
