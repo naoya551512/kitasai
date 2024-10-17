@@ -25,8 +25,8 @@ app = Flask(__name__)
 GEMINI_API_URL = "https://api.gemini.com/v1/chat" 
 
 
-GEMINI_API_KEY = ("AIzaSyCkOsYaHDXylTcu21dTE9hQZ6AnZ11Lr4A")
-genai.configure(api_key="AIzaSyCkOsYaHDXylTcu21dTE9hQZ6AnZ11Lr4A")
+GEMINI_API_KEY = ("")
+genai.configure(api_key="")
 
 model = genai.GenerativeModel('gemini-1.5-flash')
 
