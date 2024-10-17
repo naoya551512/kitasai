@@ -61,7 +61,7 @@ line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+genai.configure(api_key=GEMINI_API_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-flash')
 
@@ -197,6 +197,7 @@ def handle_message(event):
         TextSendMessage(text=response)
     )
 """
+
 
 
 def handle_message(event):
