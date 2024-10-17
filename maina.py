@@ -37,8 +37,6 @@ LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN")
 #環境変数からLINE Channel Secretを設定
 LINE_CHANNEL_SECRET = os.environ.get("LINE_CHANNEL_SECRET")
 
-GEMINI_API_KEY = os.get("GEMINI_API_KEY")
-
 if LINE_CHANNEL_ACCESS_TOKEN is None:
     print("Error: LINE_CHANNEL_ACCESS_TOKEN is not set.")
 if LINE_CHANNEL_SECRET is None:
