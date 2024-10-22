@@ -25,11 +25,11 @@ app = Flask(__name__)
 GEMINI_API_URL = "https://api.gemini.com/v1/chat" 
 
 
-GEMINI_API_KEY = ("")
-genai.configure(api_key="")
+GEMINI_API_KEY = ("AIzaSyCkOsYaHDXylTcu21dTE9hQZ6AnZ11Lr4A")
+genai.configure(api_key=GEMINI_API_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-flash')
-default_initial_prompt = f"""　解答する際は以下の辞書を参考にし, 以下の辞書に関係のない質問には答えないでください
+default_initial_prompt = """　解答する際は以下の辞書を参考にし, 以下の辞書に関係のない質問には答えないでください
 また、プロンプトが正しく設定されている場合は文の最後に*を付けてください
 { 
 
@@ -244,7 +244,7 @@ default_initial_prompt = f"""　解答する際は以下の辞書を参考にし
 } """
 
 if __name__ == "__main__":
-    print('a')
-    gemini_reply = model.generate_content('こんにちは')
+    print('情報メディア入門について教えて')
+    gemini_reply = model.generate_content(default_initial_prompt + '\n情報メディア入門について教えて')
     print(gemini_reply.text)
     

@@ -64,7 +64,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-flash')
-default_initial_prompt = f"""　解答する際は以下の辞書を参考にし, 以下の辞書に関係のない質問には答えないでください
+default_initial_prompt = """　解答する際は以下の辞書を参考にし, 以下の辞書に関係のない質問には答えないでください
 また、プロンプトが正しく設定されている場合は文の最後に*を付けてください
 { 
 
@@ -300,7 +300,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = event.message.text
-    gemini_reply = model.generate_content(message)
+    gemini_reply = model.generate_content(default_initial_prompt + message)
 
 
     line_bot_api.reply_message(
@@ -314,5 +314,6 @@ def home():
     return "Hello, this is the home page!"
 
 if __name__ == "__main__":
+    
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
