@@ -66,6 +66,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 default_initial_prompt = """　解答する際は以下の辞書を参考にし, 以下の辞書に関係のない質問には答えないでください
 また、余分空白と改行は消してください
+生成した分の最後に改行が含まれる場合は改行を削除してください
 { 
 
   "情報メディア入門": { 
@@ -305,7 +306,7 @@ def handle_message(event):
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=gemini_reply.text),
+        TextSendMessage(text=gemini_reply.text.rstrip()),
     )
 
 

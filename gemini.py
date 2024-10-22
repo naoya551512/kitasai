@@ -31,6 +31,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 default_initial_prompt = """解答する際は以下の辞書を参考にし, 以下の辞書に関係のない質問には答えないで
 変な改行は消して下さい。
+生成した分の最後に改行が含まれる場合は改行を削除してください
 { 
 
   "情報メディア入門": { 
@@ -244,7 +245,8 @@ default_initial_prompt = """解答する際は以下の辞書を参考にし, �
 } """
 
 if __name__ == "__main__":
-    print('情報メディア入門について教えて')
-    gemini_reply = model.generate_content(default_initial_prompt + '\n情報メディア入門について教えて')
-    print(gemini_reply.text)
+    message = input("文字列入れて")
+    gemini_reply = model.generate_content(default_initial_prompt + message)
+    print(gemini_reply.text.rstrip())
+    print("a")
     
