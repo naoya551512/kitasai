@@ -29,8 +29,8 @@ GEMINI_API_KEY = ("AIzaSyCkOsYaHDXylTcu21dTE9hQZ6AnZ11Lr4A")
 genai.configure(api_key=GEMINI_API_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-flash')
-default_initial_prompt = """　解答する際は以下の辞書を参考にし, 以下の辞書に関係のない質問には答えないでください
-また、プロンプトが正しく設定されている場合は文の最後に*を付けてください
+default_initial_prompt = """解答する際は以下の辞書を参考にし, 以下の辞書に関係のない質問には答えないで
+変な改行は消して下さい。
 { 
 
   "情報メディア入門": { 
