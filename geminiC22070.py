@@ -37,7 +37,10 @@ if __name__ == "__main__":
       message = input()
       if(message == 'q'):
         break
-      gemini_reply = model.generate_content(default_initial_prompt + message)
-      print(gemini_reply.text.rstrip())
+      if(message == "/hello"):
+        print("このぼっとは---")
+      else:
+        gemini_reply = model.generate_content(default_initial_prompt + message)
+        print(gemini_reply.text.rstrip())
       print("")
     
