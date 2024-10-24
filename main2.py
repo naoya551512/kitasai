@@ -69,6 +69,7 @@ def callback():
 
     return 'OK'
 
+hello = "このボットの使い方は----"
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -82,8 +83,6 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=gemini_reply.text.rstrip()),
         )
-    
-hello = "このボットの使い方は----"
 
 @app.route("/")
 def home():
