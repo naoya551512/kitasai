@@ -75,7 +75,7 @@ def handle_message(event):
     message = event.message.text
     print("message",message)
     if(message == "/hello"):
-        TextSendMessage("このボットの使い方は---")
+        TextSendMessage(text="このボットの使い方は---")
     else:
         gemini_reply = model.generate_content(default_initial_prompt + message)
         line_bot_api.reply_message(
