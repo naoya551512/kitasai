@@ -74,7 +74,7 @@ def callback():
 def handle_message(event):
     message = event.message.text
     if(message == "/hello"):
-        print("このボットの使い方は---")
+        TextSendMessage("このボットの使い方は---")
     else:
         gemini_reply = model.generate_content(default_initial_prompt + message)
 
