@@ -76,7 +76,7 @@ def handle_message(event):
     message = event.message.text
     print("message",message)
     if(message == "hello"):
-        TextSendMessage(text=hello.rstrip())
+        reply_message = TextSendMessage(text="こんにちは！")
     else:
         gemini_reply = model.generate_content(default_initial_prompt + message)
         line_bot_api.reply_message(
