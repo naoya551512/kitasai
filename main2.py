@@ -75,7 +75,7 @@ hello = "このボットの使い方は----"
 def handle_message(event):
     message = event.message.text
     print("message",message)
-    if(message == "/hello"):
+    if(message == "hello"):
         TextSendMessage(text=hello.rstrip())
     else:
         gemini_reply = model.generate_content(default_initial_prompt + message)
