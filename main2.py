@@ -69,7 +69,7 @@ def callback():
 
     return 'OK'
 
-hello = "このボットの使い方は----"
+hello = "このラインボットでは情報メディア学科の授業について知ることができます！履修時期や単位数から検索もできるので試してみてください！"
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
